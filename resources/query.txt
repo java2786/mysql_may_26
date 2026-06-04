@@ -1,0 +1,57 @@
+find student who scored below average in Sanskrit
+$ select avg(marks) from Scores where sub_id = 2;
+
+find all subject average values
+select avg(marks) from Scores gourp by sub_id
+
+
+Find total of each student.
+select sum(marks), std_id, (select name from Students where id = std_id) from Scores group by std_id;
+
+select 
+    sum(marks) as Total, 
+    std_id STD_ID, 
+    (select name from Students where id = std_id) as Name 
+from Scores group by std_id;
+
+
+Name students who scored more than average (72.7143).
+select avg(marks) from Scores; -- 72.7143
+
+
+select 
+    avg(marks) as Total, 
+    std_id STD_ID, 
+    (select name from Students where id = std_id) as Name 
+from Scores group by std_id having avg(marks) > (select avg(marks) from Scores);
+
+
+Find highest scorer.
+select max(score) from (select sum(marks) as score from Scores group by std_id) as t;
+
+desc -> 
+select sum(marks) as score from Scores group by std_id order by score desc limit 1;
+
+Find second highest scorer.
+select 
+    sum(marks) as score, 
+    (select name from Students where id = std_id) as Name 
+from Scores group by std_id order by score desc limit 1 offset 1;
+
+
+
+create database leetcode;
+use leetcode;
+
+create table Person(
+    id int primary key,
+    email varchar(20) not null
+);
+
+insert into Person(id, email) values
+(1, 'a@b.com'),
+(2, 'c@d.com'),
+(3, 'a@b.com');
+
+select email from Person group by email having count(email)>1;
+
