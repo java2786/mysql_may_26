@@ -1,0 +1,13 @@
+create table Classes(
+    id int auto_increment,
+    name varchar(10),
+    primary key(id)
+);
+
+create table Students(
+    id int auto_increment,
+    name varchar(10),
+    class_id int,
+    primary key(id),
+    foreign key (class_id) references Classes(id)
+);

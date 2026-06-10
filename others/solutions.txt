@@ -1,0 +1,16 @@
+51. Find students whose total marks exceed 400.
+
+
+Students, Scores
+
+
+select std_id, sum(marks) from Scores group by std_id having sum(marks)>400;
+
+explain select std_id, sum(marks), (select name from Students where id in (select std_id from Scores group by std_id having sum(marks)>220)) from Scores group by std_id having sum(marks)>220;
+
+
+
+
+select sc.std_id, sum(sc.marks), st.name from Scores sc
+left join Students st on st.id = sc.std_id
+group by sc.std_id having sum(sc.marks)>220;
