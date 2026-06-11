@@ -1,0 +1,106 @@
+
+select name, age, salary
+	window functoin
+from table;
+
+<windows function>() over (order by col asc) as col_name 
+
+
+
+==========
+
+CREATE TABLE employees (  
+    emp_id INT PRIMARY KEY,  
+    emp_name VARCHAR(50),  
+    department VARCHAR(30),  
+    salary INT  
+);  
+
+
+select emp_name, department, salary from employees;
+
+select emp_name, department, salary,
+	row_number() over () as sn
+from employees;
+
+select emp_name, department, salary,
+	row_number() over (order by salary desc) as sn
+from employees;
+
+
+select emp_name, department, salary,
+	row_number() over (partition by department order by salary desc) as sn
+from employees;
+
+
+
+
+Find top 2 earners from each department:
+
+select * from 
+(select emp_name, department, salary,
+	row_number() over (partition by department order by salary desc) as sn
+from employees) as serial_num
+where sn<3;
+
+
+
+
+
+
+RANK
+
+select emp_name, department, salary,
+	rank() over (order by salary desc) as rn
+from employees;
+
+select emp_name, department, salary,
+	rank() over (partition by department order by salary desc) as rn
+from employees;
+
+select emp_name, department, salary,
+	dense_rank() over (order by salary desc) as rn
+from employees;
+
+select emp_name, department, salary,
+	dense_rank() over (partition by department order by salary desc) as rn
+from employees;
+
+
+
+
+select emp_name, department, salary,
+	rank() over (order by salary desc) as rank_num,
+	dense_rank() over (order by salary desc) as dense_rank_num,
+	row_number() over (order by salary desc) as row_num
+from employees;
+
+
+
+Find top 2 earners from each department:
+
+select * from
+(
+select emp_name, department, salary,
+	dense_rank() over (partition by department order by salary desc) as rn
+    from employees
+) as new_table
+where rn<3
+;
+
+select * from
+(
+select emp_name, department, salary,
+	rank() over (partition by department order by salary desc) as rn
+    from employees
+) as new_table
+where rn<3
+;
+
+
+
+
+
+
+
+
