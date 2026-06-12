@@ -4,7 +4,10 @@ select name, age, salary
 from table;
 
 <windows function>() over (order by col asc) as col_name 
-
+rank
+dense_rank
+row_number
+aggregate
 
 
 ==========

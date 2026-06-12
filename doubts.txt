@@ -1,0 +1,13 @@
+select 
+    salesperson,
+    sum(sale_amount) as total,
+    avg(sale_amount) as average
+from sales where sale_amount>1000 
+group by salesperson
+;
+
+
+select Students.name, Subjects.name 
+    from Students 
+    left join Subjects 
+    on Students.sub_code = Subjects.code;
